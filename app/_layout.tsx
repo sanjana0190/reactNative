@@ -15,6 +15,8 @@ export default function RootLayout() {
   const colorScheme = useColorScheme();
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+    ATSChikkamagaluruColor: require('../assets/fonts/ATSChikkamagaluru-ColorRegularCOLR.ttf'),
+    ATSChikkamagaluru: require('../assets/fonts/ATSChikkamagaluru-Regular.ttf'),
   });
 
   useEffect(() => {

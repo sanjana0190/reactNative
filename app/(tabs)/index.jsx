@@ -5,14 +5,15 @@ import {
   StyleSheet,
   ImageBackground,
 } from "react-native";
-import southIndia from "@/assets/images/southIndia.jpeg";
+// import southIndia from "@/assets/images/southIndia.jpeg";
+import rainyCoffeeShop from "@/assets/images/rainyCoffeeShop.png";
 import React from "react";
 
 const App = () => {
   return (
     <SafeAreaView style={styles.safeArea}>
-      <ImageBackground source={southIndia} style={styles.image}>
-        <View style={styles.container}>
+      <ImageBackground source={rainyCoffeeShop} style={styles.image}>
+        <View style={styles.headerContainer}>
           <Text style={styles.headerText}>
             Coffee <Text style={styles.headerKannadaText}>ಕುಡಿಯೋಣ್ವಾ</Text>
           </Text>
@@ -29,6 +30,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
+  },
+  headerContainer: {
+    backgroundColor: "rgba(255, 255, 255, 0.7)",
+    width: "100%",
+    alignItems: "center",
   },
   headerText: {
     fontFamily: "ATSChikkamagaluru",

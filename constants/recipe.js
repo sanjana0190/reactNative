@@ -9,12 +9,13 @@ export const RECIPE = [
     id: 2,
     title: "Set Up the Filter",
     description:
-      "Pour hot water (not boiling!) into the top compartment. Let the magic happen as the decoction slowly drips into the bottom chamber. This might take 10-15 minutes, so patience is key!",
+      "Take your traditional filter (the metal one with two compartments). Add 2-3 teaspoons of coffee powder in the top part and gently press it down with the plunger.",
   },
   {
     id: 3,
     title: "Pour in the Heat",
-    description: "",
+    description:
+      "Pour hot water (not boiling!) into the top compartment. Let the magic happen as the decoction slowly drips into the bottom chamber. This might take 10-15 minutes, so patience is key!",
   },
   {
     id: 4,

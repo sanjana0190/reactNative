@@ -15,6 +15,7 @@ import { Colors } from "@/constants/Colors";
 import cafeMadras from "@/assets/images/cafeMadras.png";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedView } from "@/components/ThemedView";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
 const mustVisit = () => {
   const colorScheme = Appearance.getColorScheme();
@@ -47,10 +48,18 @@ const mustVisit = () => {
         <View style={styles.placesTextRow}>
           <Text
             onPress={() => toggleVisit(item.id)}
-            style={[styles.placeTitle, item.visited && styles.placeTitleText]}
+            style={[
+              styles.placeTitle,
+              item.visited && styles.visitedPlaceTitle,
+            ]}
           >
             {item.title}
           </Text>
+        </View>
+        <View style={styles.iconContainer}>
+          {item.visited && (
+            <MaterialIcons name="check-circle" size={24} color="green" />
+          )}
         </View>
       </View>
     );
@@ -142,13 +151,16 @@ function createStyles(theme, colorScheme) {
       paddingRight: 5,
       flexGrow: 1,
     },
-    placeTitleText: {
-      color: "green",
+    iconContainer: {
+      width: "15%",
+      justifyContent: "center",
+      alignItems: "center",
     },
     placeTitle: {
       fontSize: 18,
       paddingBottom: 5,
       fontFamily: "ATSChikkamagaluru",
+      color: "green",
     },
     visitedPlaceTitle: {
       textDecorationLine: "line-through",

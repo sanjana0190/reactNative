@@ -3,28 +3,59 @@ import {
   Text,
   TextInput,
   Pressable,
-  FlatList,
   StyleSheet,
   Appearance,
   Image,
 } from "react-native";
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { placesToVisit } from "@/constants/coffeePlacesToVisit";
 import { Colors } from "@/constants/Colors";
 import cafeMadras from "@/assets/images/cafeMadras.png";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedView } from "@/components/ThemedView";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import Animated, {
+  defineAnimation,
+  LinearTransition,
+} from "react-native-reanimated";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const mustVisit = () => {
   const colorScheme = Appearance.getColorScheme();
   const theme = colorScheme === "dark" ? Colors.dark : Colors.light;
   const styles = createStyles(theme, colorScheme);
-  const [toVisit, setToVisit] = useState(
-    placesToVisit.sort((a, b) => b.id - a.id)
-  );
+  const [toVisit, setToVisit] = useState([]);
   const [text, setText] = useState("");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const jsonValue = await AsyncStorage.getItem("coffeeApp");
+        const storageCoffee = jsonValue != null ? JSON.parse(jsonValue) : null;
+        if (storageCoffee && storageCoffee.length) {
+          setToVisit(storageCoffee.sort((a, b) => b.id - a.id));
+        } else {
+          setToVisit(placesToVisit.sort((a, b) => b.id - a.id));
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    fetchData();
+  }, [placesToVisit]);
+
+  useEffect(() => {
+    const storeData = async () => {
+      try {
+        const jsonValue = JSON.stringify(toVisit);
+        await AsyncStorage.setItem("coffeeApp", jsonValue);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    storeData();
+  }, [toVisit]);
 
   const addToVisit = () => {
     if (text.trim()) {
@@ -82,11 +113,13 @@ const mustVisit = () => {
         </Text>
       </ThemedView>
       <View></View>
-      <FlatList
+      <Animated.FlatList
         data={toVisit}
         renderItem={renderItem}
         keyExtractor={(visit) => visit.id}
         contentContainerStyle={{ flexGrow: 1 }}
+        itemLayoutAnimation={LinearTransition}
+        keyboardDismissMode="on-drag"
       />
       <View style={styles.inputContainer}>
         <TextInput

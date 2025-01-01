@@ -15,11 +15,9 @@ import cafeMadras from "@/assets/images/cafeMadras.png";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedView } from "@/components/ThemedView";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import Animated, {
-  defineAnimation,
-  LinearTransition,
-} from "react-native-reanimated";
+import Animated, { LinearTransition } from "react-native-reanimated";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useRouter } from "expo-router";
 
 const mustVisit = () => {
   const colorScheme = Appearance.getColorScheme();
@@ -27,6 +25,7 @@ const mustVisit = () => {
   const styles = createStyles(theme, colorScheme);
   const [toVisit, setToVisit] = useState([]);
   const [text, setText] = useState("");
+  const router = useRouter();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -73,19 +72,27 @@ const mustVisit = () => {
     );
   };
 
+  const handlePress = (id) => {
+    router.push(`/mustVisit/${id}`);
+  };
+
   const renderItem = ({ item }) => {
     return (
       <View style={styles.row}>
         <View style={styles.placesTextRow}>
-          <Text
-            onPress={() => toggleVisit(item.id)}
-            style={[
-              styles.placeTitle,
-              item.visited && styles.visitedPlaceTitle,
-            ]}
+          <Pressable
+            onPress={() => handlePress(item.id)}
+            onLongPress={() => toggleVisit(item.id)}
           >
-            {item.title}
-          </Text>
+            <Text
+              style={[
+                styles.placeTitle,
+                item.visited && styles.visitedPlaceTitle,
+              ]}
+            >
+              {item.title}
+            </Text>
+          </Pressable>
         </View>
         <View style={styles.iconContainer}>
           {item.visited && (

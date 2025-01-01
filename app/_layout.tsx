@@ -30,11 +30,12 @@ export default function RootLayout() {
   }
 
   return (
-      <Stack screenOptions={{headerStyle: {backgroundColor: theme.headerBackground}, headerTintColor: theme.text, headerShadowVisible: false}}>
-        <Stack.Screen name="index" options={{ headerShown: false, title: "Home" }} />
-        <Stack.Screen name="about" options={{ headerShown: false, title: "About" }} />
-        <Stack.Screen name="recipe" options={{ headerShown: false, title: "Recipe" }} />
-        <Stack.Screen name="mustVisit" options={{ headerShown: false, title: "Must Visit" }} />
+      <Stack screenOptions={{headerStyle: {backgroundColor: theme.headerBackground}, headerTintColor: theme.text, headerShadowVisible: false, headerShown: false}}>
+        <Stack.Screen name="index" options={{ title: "Home" }} />
+        <Stack.Screen name="about" options={{ title: "About" }} />
+        <Stack.Screen name="recipe" options={{ title: "Recipe" }} />
+        <Stack.Screen name="mustVisit" options={{ title: "Must Visit" }} />
+        <Stack.Screen name="mustVisitPlace/[id]" />
         <Stack.Screen name="+not-found" options={{headerShown: false}}/>
       </Stack>
   );

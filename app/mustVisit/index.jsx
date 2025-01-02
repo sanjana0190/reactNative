@@ -73,7 +73,10 @@ const mustVisit = () => {
   };
 
   const handlePress = (id) => {
-    router.push(`/mustVisit/${id}`);
+    const place = toVisit.find((item) => item.id === id);
+    if (place) {
+      router.push(`/mustVisit/${encodeURIComponent(place.title)}`);
+    }
   };
 
   const renderItem = ({ item }) => {

@@ -7,7 +7,6 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { ThemedView } from "@/components/ThemedView";
-import MapView, { Marker } from "react-native-maps";
 import { useState, useEffect } from "react";
 
 export default function PlaceDetails() {
@@ -44,17 +43,25 @@ export default function PlaceDetails() {
         </View>
       ) : placeDetails ? (
         <ScrollView>
-          <Text style={styles.title}>{placeDetails.display_name}</Text>
-          <Text style={styles.subtitle}>
-            Latitude: {placeDetails.lat}, Longitude: {placeDetails.lon}
-          </Text>
-          <Text style={styles.description}>
-            Type: {placeDetails.type || "N/A"}
-          </Text>
-          <Text style={styles.description}>
-            Importance: {placeDetails.importance?.toFixed(2) || "N/A"}
-          </Text>
-          <MapView
+          <View style={styles.header}>
+            <Text style={styles.title}>{placeDetails.display_name}</Text>
+            <Text style={styles.subtitle}>
+              Latitude: {placeDetails.lat}, Longitude: {placeDetails.lon}
+            </Text>
+          </View>
+          <View style={styles.infoContainer}>
+            <Text style={styles.infoLabel}>
+              Type:{" "}
+              <Text style={styles.infoValue}>{placeDetails.type || "N/A"}</Text>
+            </Text>
+            <Text style={styles.infoLabel}>
+              Importance:{" "}
+              <Text style={styles.infoValue}>
+                {placeDetails.importance?.toFixed(2) || "N/A"}
+              </Text>
+            </Text>
+          </View>
+          {/* <MapView
             style={styles.map}
             initialRegion={{
               latitude: parseFloat(placeDetails.lat),
@@ -70,7 +77,7 @@ export default function PlaceDetails() {
               }}
               title={placeDetails.display_name}
             />
-          </MapView>
+          </MapView> */}
         </ScrollView>
       ) : (
         <Text style={styles.errorText}>
@@ -85,38 +92,66 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-  },
-  text: {
-    fontSize: 18,
+    backgroundColor: "#f9f9f9",
   },
   loaderContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
   },
+  loadingText: {
+    fontSize: 16,
+    color: "#6200ee",
+    marginTop: 10,
+    fontWeight: "500",
+  },
+  header: {
+    marginBottom: 20,
+    alignItems: "center",
+  },
   title: {
-    fontSize: 22,
+    fontSize: 24,
     fontWeight: "bold",
+    color: "#333",
+    textAlign: "center",
     marginBottom: 10,
   },
   subtitle: {
     fontSize: 16,
-    color: "gray",
-    marginBottom: 10,
+    color: "#666",
+    textAlign: "center",
   },
-  description: {
-    fontSize: 14,
+  infoContainer: {
+    padding: 15,
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    marginBottom: 20,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 5,
+  },
+  infoLabel: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#444",
     marginBottom: 5,
   },
-  loadingText: {
-    fontSize: 16,
-    textAlign: "center",
-    color: "red",
-    marginTop: 20,
+  infoValue: {
+    fontWeight: "400",
+    color: "#555",
   },
   map: {
     height: 300,
-    marginTop: 20,
     borderRadius: 10,
+    overflow: "hidden",
+    marginTop: 20,
+  },
+  errorText: {
+    fontSize: 16,
+    color: "red",
+    textAlign: "center",
+    marginTop: 20,
   },
 });

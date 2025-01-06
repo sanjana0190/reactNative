@@ -35,6 +35,7 @@ export default function RootLayout() {
         <Stack.Screen name="about" options={{ title: "About" }} />
         <Stack.Screen name="recipe" options={{ title: "Recipe" }} />
         <Stack.Screen name="mustVisit" options={{ title: "Must Visit" }} />
+        <Stack.Screen name="withCoffee" options={{ title: "With Coffee" }} />
         <Stack.Screen name="mustVisitPlace/[id]" />
         <Stack.Screen name="+not-found" options={{headerShown: false}}/>
       </Stack>

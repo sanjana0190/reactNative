@@ -1,64 +1,60 @@
 import {
-  View,
-  Text,
   StyleSheet,
+  Text,
+  ScrollView,
+  View,
   Appearance,
   Platform,
   SafeAreaView,
-  ScrollView,
   FlatList,
   Image,
 } from "react-native";
-import { Colors } from "@/constants/Colors";
-import { RECIPE } from "@/constants/recipe";
 import React from "react";
+import nightCoffeeShop from "@/assets/images/nightCoffeeShop.png";
+import { Colors } from "@/constants/Colors";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
-import filter from "@/assets/images/filter.png";
 import { ThemedView } from "@/components/ThemedView";
-
-const recipe = () => {
+import { snacksWithCoffee } from "@/constants/snacksWithCoffee";
+const withCoffee = () => {
   const colorScheme = Appearance.getColorScheme();
   const theme = colorScheme === "dark" ? Colors.dark : Colors.light;
   const styles = createStyles(theme, colorScheme);
-  const Container = Platform.OS === "web" ? ScrollView : SafeAreaView;
-  const separatorComp = <View style={styles.separator} />;
+  const Container = Platform.OS == "web" ? ScrollView : SafeAreaView;
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}
       headerImage={
-        <Image source={filter} style={styles.headerImage} resizeMode="center" />
+        <Image
+          source={nightCoffeeShop}
+          style={styles.headerImage}
+          resizeMode="center"
+        />
       }
     >
       <ThemedView style={styles.titleContainer}>
         <Text style={styles.text}>
-          Coffee, <Text style={styles.kannadaText}>ಮಾಡೋಣ್ವಾ?</Text>
+          Coffee , <Text style={styles.kannadaText}>ಮಾಡೋಣ್ವಾ</Text>
         </Text>
       </ThemedView>
       <Container>
         <FlatList
-          data={RECIPE}
+          data={snacksWithCoffee}
           keyExtractor={(item) => item.id.toString()}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.contentContainer}
-          ItemSeparatorComponent={separatorComp}
-          // ListHeaderComponent={headerComp}
-          // ListFooterComponent={footerComp}
-          // ListHeaderComponentStyle={styles.footer}
           renderItem={({ item }) => (
             <View style={styles.row}>
-              <View style={styles.recipeTextRow}>
-                <Text style={[styles.recipeTitle, styles.recipeTitleText]}>
-                  {item.title}
-                </Text>
-                <Text style={styles.recipeDescriptionText}>
-                  {item.description}
-                </Text>
+              <View style={styles.snackRow}>
+                <Text style={styles.snackTitle}>{item.title}</Text>
+                <Text style={styles.snackDescription}>{item.description}</Text>
               </View>
             </View>
           )}
         ></FlatList>
       </Container>
     </ParallaxScrollView>
+    //   <Text>withCoffee</Text>
+    // </View>
   );
 };
 
@@ -90,9 +86,6 @@ function createStyles(theme, colorScheme) {
       flexDirection: "row",
       gap: 8,
     },
-    // footer: {
-    //   marginHorizontal: "auto",
-    // },
     row: {
       flexDirection: "row",
       width: "100%",
@@ -107,20 +100,17 @@ function createStyles(theme, colorScheme) {
       marginHorizontal: "auto",
       padding: 10,
     },
-    recipeTextRow: {
+    snackTextRow: {
       width: "65%",
       paddingTop: 10,
       paddingLeft: 10,
       paddingRight: 5,
       flexGrow: 1,
     },
-    recipeTitle: {
+    snackTitle: {
       fontSize: 18,
       paddingBottom: 5,
       fontFamily: "ATSChikkamagaluru",
-    },
-    recipeTitleText: {
-      color: "green",
     },
     text: {
       fontSize: 30,
@@ -137,5 +127,4 @@ function createStyles(theme, colorScheme) {
     },
   });
 }
-
-export default recipe;
+export default withCoffee;

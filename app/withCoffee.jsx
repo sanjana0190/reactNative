@@ -24,16 +24,13 @@ const withCoffee = () => {
     <ParallaxScrollView
       headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}
       headerImage={
-        <Image
-          source={nightCoffeeShop}
-          style={styles.headerImage}
-          resizeMode="center"
-        />
+        <Image source={nightCoffeeShop} style={styles.headerImage} />
       }
     >
       <ThemedView style={styles.titleContainer}>
         <Text style={styles.text}>
-          Coffee , <Text style={styles.kannadaText}>ಮಾಡೋಣ್ವಾ</Text>
+          Coffee <Text style={styles.kannadaText}>ಜೊತೆಗೆ ಒಂದು</Text>{" "}
+          <Text style={styles.text}>Bite?</Text>
         </Text>
       </ThemedView>
       <Container>
@@ -42,19 +39,21 @@ const withCoffee = () => {
           keyExtractor={(item) => item.id.toString()}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.contentContainer}
+          numColumns={2}
           renderItem={({ item }) => (
-            <View style={styles.row}>
-              <View style={styles.snackRow}>
-                <Text style={styles.snackTitle}>{item.title}</Text>
-                <Text style={styles.snackDescription}>{item.description}</Text>
-              </View>
+            <View style={styles.grid}>
+              <Image
+                source={item.image}
+                style={styles.snackImage}
+                resizeMode="cover"
+              />
+              <Text style={styles.snackTitle}>{item.title}</Text>
+              <Text style={styles.snackDescription}>{item.description}</Text>
             </View>
           )}
         ></FlatList>
       </Container>
     </ParallaxScrollView>
-    //   <Text>withCoffee</Text>
-    // </View>
   );
 };
 
@@ -70,47 +69,37 @@ function createStyles(theme, colorScheme) {
       width: "100%",
       height: 310,
       alignSelf: "center",
-      overflow: "hidden",
-      resizeMode: "contain",
+      resizeMode: "cover",
       backgroundColor: "#FFFFFF",
     },
-    separator: {
-      height: 1,
-      backgroundColor: colorScheme === "dark" ? "papayawhip" : "#000",
-      width: "50%",
-      maxWidth: "100",
-      marginHorizontal: "auto",
-      marginBottom: 10,
-    },
+
     titleContainer: {
       flexDirection: "row",
       gap: 8,
     },
-    row: {
-      flexDirection: "row",
-      width: "100%",
-      maxWidth: 600,
-      height: "auto",
-      marginBottom: 10,
-      borderStyle: "solid",
-      borderColor: colorScheme === "dark" ? "papayawhip" : "#000",
-      borderWidth: 1,
-      borderRadius: 20,
+    grid: {
+      flex: 1,
+      margin: 8,
+      borderRadius: 12,
       overflow: "hidden",
-      marginHorizontal: "auto",
+      backgroundColor: colorScheme === "dark" ? "#444" : "#fff",
       padding: 10,
+      alignItems: "center",
     },
-    snackTextRow: {
-      width: "65%",
-      paddingTop: 10,
-      paddingLeft: 10,
-      paddingRight: 5,
-      flexGrow: 1,
+    snackImage: {
+      width: "100%",
+      height: 150,
+      borderRadius: 12,
     },
     snackTitle: {
       fontSize: 18,
       paddingBottom: 5,
       fontFamily: "ATSChikkamagaluru",
+    },
+    snackDescription: {
+      fontSize: 14,
+      textAlign: "center",
+      marginTop: 5,
     },
     text: {
       fontSize: 30,

@@ -9,6 +9,7 @@ import {
   FlatList,
   Image,
 } from "react-native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
 import nightCoffeeShop from "@/assets/images/nightCoffeeShop.png";
 import { Colors } from "@/constants/Colors";

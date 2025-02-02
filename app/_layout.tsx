@@ -3,9 +3,9 @@ import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
-import { Appearance } from 'react-native';
+import { Appearance, StyleSheet} from 'react-native';
 import { Colors } from '@/constants/Colors';
-
+import { Tabs } from 'expo-router';
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
@@ -19,6 +19,20 @@ export default function RootLayout() {
     ATSChikkamagaluru: require('../assets/fonts/ATSChikkamagaluru-Regular.ttf'),
   });
 
+  const styles = StyleSheet.create({
+    tabContainer: {
+      position: 'absolute',
+      bottom: 0,
+      width: '100%',
+      height: 70,
+      elevation: 5,
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+      paddingHorizontal: 20,
+      alignItems: 'center',
+    },
+  });
+
   useEffect(() => {
     if (loaded) {
       SplashScreen.hideAsync();
@@ -30,14 +44,25 @@ export default function RootLayout() {
   }
 
   return (
-      <Stack screenOptions={{headerStyle: {backgroundColor: theme.headerBackground}, headerTintColor: theme.text, headerShadowVisible: false, headerShown: false}}>
-        <Stack.Screen name="index" options={{ title: "Home" }} />
-        <Stack.Screen name="about" options={{ title: "About" }} />
-        <Stack.Screen name="recipe" options={{ title: "Recipe" }} />
-        <Stack.Screen name="mustVisit" options={{ title: "Must Visit" }} />
-        <Stack.Screen name="withCoffee" options={{ title: "With Coffee" }} />
-        <Stack.Screen name="mustVisitPlace/[id]" />
-        <Stack.Screen name="+not-found" options={{headerShown: false}}/>
-      </Stack>
+      <Tabs 
+        screenOptions={{
+          headerStyle: {backgroundColor: theme.headerBackground}, 
+          headerTintColor: theme.text, 
+          headerShadowVisible: false, 
+          headerShown: false ,
+          tabBarActiveTintColor: theme.text , 
+          tabBarStyle: {...styles.tabContainer},
+          tabBarIcon: () => null, 
+          tabBarShowLabel: true,
+        }}
+      >
+        <Tabs.Screen name="about" options={{ title: "About" ,tabBarLabel: "About"}} />
+        <Tabs.Screen name="recipe" options={{ title: "Recipe", tabBarLabel: "Recipe" }} />
+        <Tabs.Screen name="index" options={{ title: "Home", tabBarLabel: "Home"}} />
+        <Tabs.Screen name="mustVisit" options={{ title: "Must Visit", tabBarLabel: "Must Visit" }} />
+        <Tabs.Screen name="withCoffee" options={{ title: "With Coffee",tabBarLabel: "With Coffee" }} />
+        <Tabs.Screen name="mustVisitPlace/[id]" />
+        <Tabs.Screen name="+not-found" options={{ href: null }} />
+      </Tabs>
   );
 }
